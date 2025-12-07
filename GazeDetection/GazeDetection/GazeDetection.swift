@@ -106,7 +106,7 @@ final class ARFaceController: UIViewController, ARSessionDelegate {
     var vm: AttentionViewModel!
     private let session = ARSession()
     private var requested = false
-    private let debugLogging = true
+    private let debugLogging = false
 
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -164,7 +164,7 @@ final class ARFaceController: UIViewController, ARSessionDelegate {
         let aR = angleBetween(normalize(rightFLocal), normalize(camFwdLocal))
         let deg = (aL + aR) * 0.5 * 180 / .pi
 
-        let looking = face.isTracked && eyesOpen && deg < 22.5
+        let looking = face.isTracked && eyesOpen && deg < 18.5
 
         if debugLogging {
             print(String(format: "blinkL %.2f blinkR %.2f eyesOpen %@ deg %.1f tracked %@",

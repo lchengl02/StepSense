@@ -8,7 +8,6 @@
 import SwiftUI
 import Combine
 
-
 final class PressureOverlayViewModel: ObservableObject {
     @Published var leftOpacity: CGFloat = 0.35
     @Published var rightOpacity: CGFloat = 0.35
@@ -31,15 +30,39 @@ struct PressureOverlay: View {
                 Circle()
                     .fill(color.opacity(vm.leftOpacity))
                     .frame(width: diameter, height: diameter)
-                    .frame(maxWidth: .infinity, maxHeight: .infinity, alignment: .leading)
-                    .padding(.leading, horizontalInset)
+                    .overlay(
+                        VStack(spacing: 6) {
+                            Text("Front")
+                                .font(.system(size: 20, weight: .semibold))
+                            Text("\(vm.frontPercent)%")
+                                .font(.system(size: 36, weight: .bold, design: .rounded))
+                                .monospacedDigit()
+                        }
+                        .foregroundColor(.black)
+                    )
+                    .frame(maxWidth: .infinity,
+                           maxHeight: .infinity,
+                           alignment: .trailing)
+                    .padding(.trailing, horizontalInset)
                     .padding(.vertical, max(0, (h - diameter) / 2))
 
                 Circle()
                     .fill(color.opacity(vm.rightOpacity))
                     .frame(width: diameter, height: diameter)
-                    .frame(maxWidth: .infinity, maxHeight: .infinity, alignment: .trailing)
-                    .padding(.trailing, horizontalInset)
+                    .overlay(
+                        VStack(spacing: 6) {
+                            Text("Back")
+                                .font(.system(size: 20, weight: .semibold))
+                            Text("\(vm.backPercent)%")
+                                .font(.system(size: 36, weight: .bold, design: .rounded))
+                                .monospacedDigit()
+                        }
+                        .foregroundColor(.black)
+                    )
+                    .frame(maxWidth: .infinity,
+                           maxHeight: .infinity,
+                           alignment: .leading)
+                    .padding(.leading, horizontalInset)
                     .padding(.vertical, max(0, (h - diameter) / 2))
             }
             .ignoresSafeArea()
